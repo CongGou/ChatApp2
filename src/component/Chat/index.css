@@ -1,0 +1,56 @@
+.Chat {
+  position: relative;
+  width: 830px;
+  height: 675px;
+  color: #fff;
+}
+.Close {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  background: #ee514d;
+  line-height: 11px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+}
+.Nav {
+  height: 605px;
+  width: 70px;
+  padding-top: 70px;
+  background: rgba(0.142, 0.15, 0.168, 0.8);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.ChatImg {
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+  background: cornsilk;
+  margin: 0 auto;
+}
+.ChatImg img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+.NavList a {
+  display: inline-block;
+  margin-top: 40px;
+  width: 70px;
+  height: 40px;
+  text-align: center;
+  text-decoration: none;
+  color: #959697;
+}
+.Active {
+  color: #59b910;
+}
+.NavList .MuiSvgIcon-root {
+  font-size: 35px;
+}
