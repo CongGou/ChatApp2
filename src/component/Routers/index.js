@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Login from "../Login";
 import Registered from "../Registered";
 import Chat from "../Chat";
+import Messages from "../Messages";
 class Routers extends Component {
   render() {
     return (

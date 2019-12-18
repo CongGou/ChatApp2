@@ -2,10 +2,8 @@
   position: relative;
   width: 830px;
   height: 675px;
-  background: #ccc;
   margin: 10px auto;
   border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .Container {

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import People from "@material-ui/icons/People";
 import ChatBubble from "@material-ui/icons/ChatBubble";
+import Messages from "../Messages";
 class Chat extends Component {
   handleClick = () => {};
   handleClose = () => {
@@ -31,6 +32,11 @@ class Chat extends Component {
               </Grid>
             </Link>
           </div>
+        </div>
+        <div className="Main">
+          <Switch>
+            <Route exact path="/Chat/message" component={Messages} />
+          </Switch>
         </div>
       </div>
     );

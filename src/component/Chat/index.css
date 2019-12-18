@@ -1,8 +1,11 @@
 .Chat {
+  display: flex;
   position: relative;
   width: 830px;
   height: 675px;
   color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 .Close {
   position: absolute;
@@ -53,4 +56,11 @@
 }
 .NavList .MuiSvgIcon-root {
   font-size: 35px;
+}
+.Main {
+  width: 760px;
+  height: 100%;
+  background: saddlebrown;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }

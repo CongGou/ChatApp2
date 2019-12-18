@@ -1,0 +1,51 @@
+.MessageContainer {
+  width: 260px;
+  height: 100%;
+}
+.Search {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: #fafafa;
+  padding: 15px 0;
+  border-right: 1px solid #dedede;
+  border-bottom: 1px solid #dedede;
+}
+.SearchInput {
+  width: 200px;
+  height: 20px;
+  border: 1px solid #d5d5d5;
+  outline-style: none;
+  border-radius: 3px;
+  margin-left: 15px;
+  background: #e6e6e6;
+  text-indent: 30px;
+}
+.SearchIcon {
+  position: absolute;
+  top: 17px;
+  left: 20px;
+}
+.SearchIcon .MuiSvgIcon-root {
+  font-size: 22px;
+  color: #777777;
+}
+.Add {
+  height: 21px;
+  margin-left: 8px;
+  font-size: 16px;
+  line-height: 16px;
+}
+.Add:active {
+  background: #e6e6e6;
+  outline: none;
+  border-radius: 5px;
+}
+.MessageList {
+  width: 260px;
+  height: 615px;
+  background: #fbfbfb;
+  overflow: hidden;
+  border-right: 1px solid #dedede;
+  /* overflow-y: scroll; */
+}
