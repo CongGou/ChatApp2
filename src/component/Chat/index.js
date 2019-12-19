@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Redirect, Route, Link } from "react-router-dom";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import People from "@material-ui/icons/People";
@@ -35,7 +35,12 @@ class Chat extends Component {
         </div>
         <div className="Main">
           <Switch>
-            <Route exact path="/Chat/message" component={Messages} />
+            <Route
+              exact
+              path="/Chat"
+              render={() => <Redirect to={"/Chat/message"} />}
+            />
+            <Route path="/Chat/message" component={Messages} />
           </Switch>
         </div>
       </div>

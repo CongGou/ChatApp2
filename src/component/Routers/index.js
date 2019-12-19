@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 import Login from "../Login";
 import Registered from "../Registered";
 import Chat from "../Chat";

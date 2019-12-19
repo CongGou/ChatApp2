@@ -58,6 +58,7 @@
   font-size: 35px;
 }
 .Main {
+  display: flex;
   width: 760px;
   height: 100%;
   background: saddlebrown;
