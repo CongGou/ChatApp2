@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Switch, Redirect, Route, Link } from "react-router-dom";
+import { Switch, Redirect, Route, NavLink } from "react-router-dom";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import People from "@material-ui/icons/People";
 import ChatBubble from "@material-ui/icons/ChatBubble";
 import Messages from "../Messages";
+import Contact from "../Contact";
 class Chat extends Component {
   handleClick = () => {};
   handleClose = () => {
@@ -21,16 +22,24 @@ class Chat extends Component {
             <img src={require("../images/WechatIMG2.jpeg")} alt="" />
           </div>
           <div className="NavList">
-            <Link to="/Chat/message" onClick={this.handleClick}>
-              <Grid item className="Active">
+            <NavLink
+              to="/Chat/message"
+              onClick={this.handleClick}
+              activeClassName={"Active"}
+            >
+              <Grid item>
                 <ChatBubble />
               </Grid>
-            </Link>
-            <Link to="/Chat/contact" onClick={this.handleClick}>
+            </NavLink>
+            <NavLink
+              to="/Chat/contact"
+              onClick={this.handleClick}
+              activeClassName={"Active"}
+            >
               <Grid item>
                 <People />
               </Grid>
-            </Link>
+            </NavLink>
           </div>
         </div>
         <div className="Main">
@@ -41,6 +50,7 @@ class Chat extends Component {
               render={() => <Redirect to={"/Chat/message"} />}
             />
             <Route path="/Chat/message" component={Messages} />
+            <Route path="/Chat/contact" component={Contact} />
           </Switch>
         </div>
       </div>

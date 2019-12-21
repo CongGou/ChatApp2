@@ -51,7 +51,7 @@
   text-decoration: none;
   color: #959697;
 }
-.Active {
+.NavList .Active {
   color: #59b910;
 }
 .NavList .MuiSvgIcon-root {

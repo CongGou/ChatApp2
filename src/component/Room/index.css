@@ -131,6 +131,26 @@
 }
 .Menu {
   height: 45px;
-  width: 100%;
+  width: 480px;
   background: #a0e75a;
+  padding-left: 20px;
+  line-height: 60px;
+}
+.MenuIcon {
+  width: 25px;
+  height: 45px;
+}
+.Send {
+  width: 500px;
+  height: 112px;
+  border-bottom-right-radius: 5px;
+}
+.Send textarea {
+  width: 480px;
+  height: 92px;
+  padding: 10px;
+  outline: none;
+  border: 0;
+  resize: none;
+  background: #f2f2f2;
 }
