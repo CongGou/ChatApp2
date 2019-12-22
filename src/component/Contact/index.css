@@ -1,0 +1,11 @@
+.ContactList .ListItem {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  color: #000;
+  font-size: 14px;
+  line-height: 40px;
+}
+.ContactList .MuiGrid-item {
+  line-height: 53px;
+}
