@@ -130,6 +130,7 @@
   height: 157px;
 }
 .Menu {
+  display: flex;
   height: 45px;
   width: 480px;
   padding-left: 20px;
@@ -138,6 +139,7 @@
 .MenuIcon {
   width: 25px;
   height: 45px;
+  margin-left: 10px !important;
 }
 .Send {
   width: 500px;

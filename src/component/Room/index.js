@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import People from "@material-ui/icons/People";
+import TagFaces from "@material-ui/icons/TagFaces";
 import FolderOpen from "@material-ui/icons/FolderOpen";
+import MicNone from "@material-ui/icons/MicNone";
+import Call from "@material-ui/icons/Call";
+import Videocam from "@material-ui/icons/Videocam";
 
 const Room = props => {
   //成员显示模块
@@ -102,6 +106,18 @@ const Room = props => {
             onChange={handlePreviewImg}
             style={{ display: "none" }}
           />
+          <Grid item className="MenuIcon">
+            <TagFaces />
+          </Grid>
+          <Grid item className="MenuIcon">
+            <MicNone />
+          </Grid>
+          <Grid item className="MenuIcon">
+            <Call />
+          </Grid>
+          <Grid item className="MenuIcon">
+            <Videocam />
+          </Grid>
         </div>
 
         <div className="Send">
