@@ -13,7 +13,8 @@ class Contact extends Component {
     super(arg);
     this.state = {
       display1: false,
-      display2: false
+      display2: false,
+      display3: false
     };
   }
   handleClick1 = () => {
@@ -24,6 +25,11 @@ class Contact extends Component {
   handleClick2 = () => {
     this.setState({
       display2: !this.state.display2
+    });
+  };
+  handleClick3 = () => {
+    this.setState({
+      display3: !this.state.display3
     });
   };
   render() {
@@ -83,6 +89,31 @@ class Contact extends Component {
               群聊
             </NavLink>
             <div style={{ display: this.state.display2 ? "block" : "none" }}>
+              {[1, 12, 1, 2, 1].map((item, index) => (
+                <NewUser key={index} />
+              ))}
+            </div>
+            <NavLink
+              to={"/Chat/contact/"}
+              replace
+              className={"ListItem"}
+              onClick={this.handleClick3}
+            >
+              <Grid
+                item
+                style={{ display: this.state.display3 ? "block" : "none" }}
+              >
+                <ExpandMore />
+              </Grid>
+              <Grid
+                item
+                style={{ display: this.state.display3 ? "none" : "block" }}
+              >
+                <ChevronRight />
+              </Grid>
+              朋友
+            </NavLink>
+            <div style={{ display: this.state.display3 ? "block" : "none" }}>
               {[1, 12, 1, 2, 1].map((item, index) => (
                 <NewUser key={index} />
               ))}
