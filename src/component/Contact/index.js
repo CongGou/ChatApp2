@@ -8,6 +8,7 @@ import MessageLogo from "../MessageLogo";
 import UserCenter from "../UserCenter";
 import "./index.css";
 import NewUser from "../user";
+import Group from "../Group";
 class Contact extends Component {
   constructor(arg) {
     super(arg);
@@ -115,7 +116,7 @@ class Contact extends Component {
             </NavLink>
             <div style={{ display: this.state.display3 ? "block" : "none" }}>
               {[1, 12, 1, 2, 1].map((item, index) => (
-                <NewUser key={index} />
+                <Group key={index} />
               ))}
             </div>
           </div>
@@ -123,7 +124,7 @@ class Contact extends Component {
         <div className="MessageRoom">
           <Switch>
             <Route exact path="/Chat/contact" component={MessageLogo} />
-            {/* <Route path="/Chat/contact/:id" component={UserCenter} /> */}
+            <Route path="/Chat/contact/:id" component={UserCenter} />
           </Switch>
         </div>
       </div>
@@ -132,3 +133,10 @@ class Contact extends Component {
 }
 
 export default Contact;
+
+const data = [
+  {
+    image: require("../images/WechatIMG2.jpeg"),
+    userName: "郭海聪"
+  }
+];
