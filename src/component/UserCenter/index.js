@@ -3,6 +3,7 @@ import "./index.css";
 import { NavLink } from "react-router-dom";
 class UserCenter extends Component {
   render() {
+    // console.log(this.props.match.params.id);
     return (
       <div className="UserCenter">
         <div className="UserCenterTit">
@@ -16,9 +17,12 @@ class UserCenter extends Component {
           </p>
           <p>
             <span className="Note">账&nbsp;&nbsp;&nbsp;&nbsp;号</span>
-            <span>123232</span>
+            <span>{this.props.match.params.id}</span>
           </p>
-          <NavLink to={"/Chat/message/666666"} className="sendMessage">
+          <NavLink
+            to={"/Chat/message/" + this.props.match.params.id}
+            className="sendMessage"
+          >
             发送消息
           </NavLink>
         </div>
