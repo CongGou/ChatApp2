@@ -112,5 +112,12 @@ const Data = [
     title: "酒吧",
     user: "郭海聪",
     content: "你作业做了吗没有吧你不敢不交"
+  },
+  {
+    id: "22222",
+    image: require("../images/WechatIMG2.jpeg"),
+    title: "酒吧",
+    user: "郭海聪",
+    content: "你作业做了吗没有吧你不敢不交"
   }
 ];

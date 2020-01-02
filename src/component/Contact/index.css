@@ -1,3 +1,6 @@
+.ContactList {
+  overflow-y: auto;
+}
 .ContactList .ListItem {
   display: flex;
   height: 40px;
