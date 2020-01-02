@@ -9,6 +9,7 @@ import UserCenter from "../UserCenter";
 import "./index.css";
 import NewUser from "../user";
 import Group from "../Group";
+import Friends from "../Friends";
 class Contact extends Component {
   constructor(arg) {
     super(arg);
@@ -90,8 +91,12 @@ class Contact extends Component {
               群聊
             </NavLink>
             <div style={{ display: this.state.display2 ? "block" : "none" }}>
-              {[1, 12, 1, 2, 1].map((item, index) => (
-                <NewUser key={index} />
+              {data.map((item, index) => (
+                <Group
+                  key={index}
+                  image={item.image}
+                  UserName={item.UserName}
+                />
               ))}
             </div>
             <NavLink
@@ -112,11 +117,13 @@ class Contact extends Component {
               >
                 <ChevronRight />
               </Grid>
-              朋友
+              联系人
             </NavLink>
             <div style={{ display: this.state.display3 ? "block" : "none" }}>
-              {[1, 12, 1, 2, 1].map((item, index) => (
-                <Group key={index} />
+              {data.map((item, index) => (
+                <NavLink to={"/Chat/contact/111"} key={index}>
+                  <Friends image={item.image} UserName={item.UserName} />
+                </NavLink>
               ))}
             </div>
           </div>
@@ -137,6 +144,18 @@ export default Contact;
 const data = [
   {
     image: require("../images/WechatIMG2.jpeg"),
-    userName: "郭海聪"
+    UserName: "郭海聪"
+  },
+  {
+    image: require("../images/WechatIMG2.jpeg"),
+    UserName: "郭海聪"
+  },
+  {
+    image: require("../images/WechatIMG2.jpeg"),
+    UserName: "郭海聪"
+  },
+  {
+    image: require("../images/WechatIMG2.jpeg"),
+    UserName: "郭海聪"
   }
 ];

@@ -9,3 +9,6 @@
 .ContactList .MuiGrid-item {
   line-height: 53px;
 }
+.ContactList a {
+  text-decoration: none;
+}

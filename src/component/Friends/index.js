@@ -1,8 +1,6 @@
 import React from "react";
-
 import styled from "styled-components";
-
-const Group = props => (
+const Friends = props => (
   <Container>
     <Image src={props.image} />
     <Cover>
@@ -10,7 +8,7 @@ const Group = props => (
     </Cover>
   </Container>
 );
-export default Group;
+export default Friends;
 
 const Container = styled.div`
   position: relative;
