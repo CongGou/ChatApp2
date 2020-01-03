@@ -153,29 +153,4 @@ class Contact extends Component {
 
 export default Contact;
 
-const data = [
-  {
-    id: "sgahd23242",
-    account: "ghc7777",
-    image: require("../images/WechatIMG2.jpeg"),
-    UserName: "哈狗"
-  },
-  {
-    id: "rewerwe335453",
-    account: "ghc16666",
-    image: require("../images/WechatIMG2.jpeg"),
-    UserName: "郭海聪"
-  },
-  {
-    id: "4324dsfs",
-    account: "ghc123123",
-    image: require("../images/WechatIMG2.jpeg"),
-    UserName: "阿帕奇"
-  },
-  {
-    id: "1231dsfsd3423",
-    account: "ghc133333",
-    image: require("../images/WechatIMG2.jpeg"),
-    UserName: "蒙多"
-  }
-];
+const data = [];

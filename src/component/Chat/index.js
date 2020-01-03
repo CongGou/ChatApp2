@@ -6,11 +6,15 @@ import People from "@material-ui/icons/People";
 import ChatBubble from "@material-ui/icons/ChatBubble";
 import Messages from "../Messages";
 import Contact from "../Contact";
+import { ChatHome } from "../Axios";
 class Chat extends Component {
-  handleClick = () => {};
-  handleClose = () => {
-    this.props.history.push("/");
-  };
+  componentDidMount() {
+    ChatHome()
+      .then(res => {
+        console.log(res);
+      })
+      .catch(e => {});
+  }
   render() {
     return (
       <div className="Chat">
@@ -22,20 +26,12 @@ class Chat extends Component {
             <img src={require("../images/WechatIMG2.jpeg")} alt="" />
           </div>
           <div className="NavList">
-            <NavLink
-              to="/Chat/message"
-              onClick={this.handleClick}
-              activeClassName={"Active"}
-            >
+            <NavLink to="/Chat/message" activeClassName={"Active"}>
               <Grid item>
                 <ChatBubble />
               </Grid>
             </NavLink>
-            <NavLink
-              to="/Chat/contact"
-              onClick={this.handleClick}
-              activeClassName={"Active"}
-            >
+            <NavLink to="/Chat/contact" activeClassName={"Active"}>
               <Grid item>
                 <People />
               </Grid>
