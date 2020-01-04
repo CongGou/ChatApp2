@@ -3,16 +3,18 @@ const crypto = require("crypto");
 
 module.exports = (req, res) => {
   let { userName, passWord } = req.body;
-  const secret = "郭海聪";
+  const secrets = "guohaicong";
   User.findOne({ userName }).then(data => {
     if (data) {
       let CryptoPassWord = crypto
-        .createHash("sha256", secret)
+        .createHash("sha256", secrets)
         .update(passWord)
         .digest("hex");
+
       if (CryptoPassWord === data.passWord) {
-        res.send({ code: 200, msg: "登录成功" });
         req.session.userinfo = data;
+        res.send({ code: 200, msg: "登录成功" });
+        //登录后添加session
       } else {
         res.send({ code: 0, msg: "密码不正确" });
       }

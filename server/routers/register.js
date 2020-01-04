@@ -12,8 +12,8 @@ module.exports = (req, res) => {
       })
         .then(data => {
           if (data) {
-            res.send({ code: 200, msg: "注册成功" });
             req.session.userinfo = data;
+            res.send({ code: 200, msg: "注册成功" });
           }
         })
         .catch(e => {
