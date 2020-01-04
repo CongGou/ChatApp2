@@ -6,15 +6,34 @@ import People from "@material-ui/icons/People";
 import ChatBubble from "@material-ui/icons/ChatBubble";
 import Messages from "../Messages";
 import Contact from "../Contact";
-import { ChatHome } from "../Axios";
+import { ChatHome, _Close } from "../Axios";
 class Chat extends Component {
+  state = {
+    Image: ""
+  };
   componentDidMount() {
     ChatHome()
       .then(res => {
-        console.log(res);
+        console.log(res.data);
+        if (res.data) {
+          if (res.data.code === 404) {
+            this.props.history.push("/");
+          }
+          this.setState({
+            Image: res.data.data.photo
+          });
+        }
       })
       .catch(e => {});
   }
+  handleClose = () => {
+    _Close().then(res => {
+      console.log(res);
+      if (res.data.code === 200) {
+        this.props.history.push("/");
+      }
+    });
+  };
   render() {
     return (
       <div className="Chat">
@@ -23,7 +42,7 @@ class Chat extends Component {
         </div>
         <div className="Nav">
           <div className="ChatImg">
-            <img src={require("../images/WechatIMG2.jpeg")} alt="" />
+            <img src={this.state.Image} alt="" />
           </div>
           <div className="NavList">
             <NavLink to="/Chat/message" activeClassName={"Active"}>
