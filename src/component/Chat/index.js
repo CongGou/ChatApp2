@@ -12,9 +12,9 @@ class Chat extends Component {
     Image: ""
   };
   componentDidMount() {
+    //加载后获取个人资料
     ChatHome()
       .then(res => {
-        console.log(res.data);
         if (res.data) {
           if (res.data.code === 404) {
             this.props.history.push("/");
@@ -28,7 +28,6 @@ class Chat extends Component {
   }
   handleClose = () => {
     _Close().then(res => {
-      console.log(res);
       if (res.data.code === 200) {
         this.props.history.push("/");
       }
