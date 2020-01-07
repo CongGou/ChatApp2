@@ -8,7 +8,7 @@ class UserCenter extends Component {
       <div className="UserCenter">
         <div className="UserCenterTit">
           <h2>郭海聪</h2>
-          <img src={require("../images/WechatIMG2.jpeg")}></img>
+          <img src={require("../images/WechatIMG2.jpeg")} alt="" />
         </div>
         <div className="UserCenterBtm">
           <p>

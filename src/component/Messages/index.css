@@ -47,6 +47,43 @@
   outline: none;
   border-radius: 5px;
 }
+.AddBox {
+  position: absolute;
+  top: 50px;
+  right: 5px;
+  width: 160px;
+  height: 60px;
+  padding: 10px 0;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(206, 206, 206, 0.6);
+}
+.addHidden {
+  display: none;
+}
+.AddBox::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  border-right: 10px solid transparent;
+  width: 0;
+  height: 0;
+}
+.AddBox a {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+.AddBox a:hover {
+  background: #dedfdf;
+}
 .MessageList {
   width: 259px;
   height: 615px;
