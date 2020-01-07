@@ -12,20 +12,22 @@ app.use(
     rolling: true, //只要用户和后端有交互（访问页面，跳转页面，ajax……），刷新存储时间
     resave: false, //是否每次请求都重新存储session数据
     saveUninitialized: false, //初始值
-    cookie: { maxAge: 1000 * 60 * 10 } //设置session过期时间
+    cookie: { maxAge: 1000 * 60 * 10 * 60 } //设置session过期时间
   })
 );
 
 //中间件
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //注册
 app.post("/register", require("./routers/register"));
 //登录
 app.post("/login", require("./routers/login"));
+//查找用户
+app.post("/searchuser", require("./routers/searchuser"));
 //聊天首页
-app.use("/chathome", require("./routers/chathome"));
+app.get("/chathome", require("./routers/chathome"));
 
 //登出 路由
 app.get("/logout", (req, res) => {
@@ -33,7 +35,6 @@ app.get("/logout", (req, res) => {
   req.session.destroy();
   res.send({ code: 200, msg: "退出登录" });
 });
-
 //启动数据库
 mongoose
   .connect("mongodb://localhost:27019/chatapp", { useNewUrlParser: true })
