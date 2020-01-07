@@ -15,3 +15,7 @@ export const ChatHome = data => {
 export const _Close = data => {
   return axios.get("/api/logout", data);
 };
+//搜索用户
+export const SearchUser = data => {
+  return axios.post("/api/searchuser", data);
+};
