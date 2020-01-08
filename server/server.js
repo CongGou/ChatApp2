@@ -1,9 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const socketio = require("socket.io");
+const http = require("http");
 const app = express();
-
-app.listen(8888);
+const PORT = process.env.PORT || 8888;
+const server = http.createServer(app);
+const io = socketio(server);
+server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
 //设置session参数
 app.use(
@@ -35,6 +39,14 @@ app.get("/logout", (req, res) => {
   req.session.destroy();
   res.send({ code: 200, msg: "退出登录" });
 });
+
+io.on("connection", function(socket) {
+  console.log("a user connected");
+  socket.on("disconnect", function() {
+    console.log("user disconnected");
+  });
+});
+
 //启动数据库
 mongoose
   .connect("mongodb://localhost:27019/chatapp", { useNewUrlParser: true })
