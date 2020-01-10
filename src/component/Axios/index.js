@@ -19,3 +19,11 @@ export const _Close = data => {
 export const SearchUser = data => {
   return axios.post("/api/searchuser", data);
 };
+//添加好友
+export const AddFriend = data => {
+  return axios.post("/api/add", data);
+};
+//新朋友认证
+export const NewFriends = data => {
+  return axios.get("/api/newsfriends", data);
+};
