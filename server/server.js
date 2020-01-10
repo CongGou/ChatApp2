@@ -39,13 +39,12 @@ app.get("/logout", (req, res) => {
   req.session.destroy();
   res.send({ code: 200, msg: "退出登录" });
 });
-
-io.on("connection", function(socket) {
-  console.log("a user connected");
-  socket.on("disconnect", function() {
-    console.log("user disconnected");
-  });
-});
+// 添加好友
+app.use("/add", require("./routers/add.js"));
+// 新朋友
+app.get("/newsfriends", require("./routers/newsfriends.js"));
+//socketio
+require("./socket/chat")(io);
 
 //启动数据库
 mongoose
