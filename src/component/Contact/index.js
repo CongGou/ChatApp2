@@ -13,6 +13,7 @@ import Group from "../Group";
 import Friends from "../Friends";
 import Certification from "../Certification";
 import GroupChat from "../GroupChat";
+import { NewFriends } from "../Axios";
 class Contact extends Component {
   constructor(arg) {
     super(arg);
@@ -37,6 +38,11 @@ class Contact extends Component {
       display3: !this.state.display3
     });
   };
+  componentDidMount() {
+    NewFriends().then(res => {
+      console.log(res);
+    });
+  }
   render() {
     return (
       <div className="MessageCover">
