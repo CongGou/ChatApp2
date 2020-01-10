@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import Search from "@material-ui/icons/Search";
-import { SearchUser } from "../Axios";
+import { SearchUser, AddFriend } from "../Axios";
+import socket from "../socket";
+import "../socket";
 class Add extends Component {
   constructor(arg) {
     super(arg);
     this.state = {
       data: {
         userName: "",
-        photo: ""
+        photo: "",
+        user_id: ""
       },
       msg: "输入用户名即可搜索",
       isShow: false
@@ -25,7 +28,8 @@ class Add extends Component {
               this.setState({
                 data: {
                   userName: res.data.msg.userName,
-                  photo: res.data.msg.photo
+                  photo: res.data.msg.photo,
+                  user_id: res.data.msg._id
                 },
                 isShow: true
               });
@@ -44,6 +48,14 @@ class Add extends Component {
       });
     }
   };
+  handleAdd = () => {
+    const passUser = this.state.data.user_id;
+    AddFriend({ passUser })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(e => console.log(e));
+  };
   render() {
     return (
       <div className="AddContainer">
@@ -57,7 +69,7 @@ class Add extends Component {
         <div className={this.state.isShow ? "userBox " : "userBox hidden"}>
           <img src={this.state.data.photo} alt="" />
           <span>{this.state.data.userName}</span>
-          <button>添加</button>
+          <button onClick={this.handleAdd}>添加</button>
         </div>
         <div
           className={
