@@ -49,7 +49,11 @@ class Chat extends Component {
                 <ChatBubble />
               </Grid>
             </NavLink>
-            <NavLink to="/Chat/contact" activeClassName={"Active"}>
+            <NavLink
+              to="/Chat/contact"
+              activeClassName={"Active"}
+              onClick={this.handleClick}
+            >
               <Grid item>
                 <People />
               </Grid>
