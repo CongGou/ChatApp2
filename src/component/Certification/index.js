@@ -1,20 +1,50 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { User, AddPass } from "../Axios";
+//认证组件
 class Certification extends Component {
+  constructor(arg) {
+    super(arg);
+    this.state = {
+      photo: "",
+      userName: "",
+      _id: "",
+      msg: "通过认证"
+    };
+  }
   handleClick = () => {
-    this.props.history.push("/");
+    let id = this.state._id;
+    AddPass({ id }).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          msg: res.data.msg
+        });
+      }
+    });
   };
+  componentDidMount() {
+    let id = this.props.match.params.id;
+    User({ id }).then(res => {
+      this.setState({
+        photo: res.data.data.photo,
+        userName: res.data.data.userName,
+        _id: res.data.data._id
+      });
+    });
+  }
   render() {
     return (
       <Container>
         <Cover>
-          <UserName>郭海聪</UserName>
-          <Image src={require("../images/WechatIMG2.jpeg")} />
+          <UserName>{this.state.userName}</UserName>
+          <Image src={this.state.photo} />
         </Cover>
+
         <Account>
-          账&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;1231
+          账&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
+          {this.state.userName}
         </Account>
-        <Through onClick={this.handleClick}>通过认证</Through>
+        <Through onClick={this.handleClick}>{this.state.msg}</Through>
       </Container>
     );
   }

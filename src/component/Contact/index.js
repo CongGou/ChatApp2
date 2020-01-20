@@ -13,14 +13,34 @@ import Group from "../Group";
 import Friends from "../Friends";
 import Certification from "../Certification";
 import GroupChat from "../GroupChat";
-import { NewFriends } from "../Axios";
+import { NewFriends, Contacts } from "../Axios";
 class Contact extends Component {
   constructor(arg) {
     super(arg);
     this.state = {
       display1: false,
       display2: false,
-      display3: false
+      display3: false,
+      NewFriends: [
+        {
+          CertificationUser: {
+            userName: "",
+            photo: "",
+            _id: ""
+          },
+          create_time: ""
+        }
+      ],
+      Contacts: [
+        {
+          CertificationUser: {
+            userName: "",
+            photo: "",
+            _id: ""
+          },
+          create_time: ""
+        }
+      ]
     };
   }
   handleClick1 = () => {
@@ -39,8 +59,18 @@ class Contact extends Component {
     });
   };
   componentDidMount() {
+    //新朋友请求
     NewFriends().then(res => {
-      console.log(res);
+      // console.log(res.data.data[0].CertificationUser);
+      this.setState({
+        NewFriends: res.data.data
+      });
+    });
+    //联系人
+    Contacts().then(res => {
+      this.setState({
+        Contacts: res.data.data
+      });
     });
   }
   render() {
@@ -76,9 +106,15 @@ class Contact extends Component {
               新朋友
             </NavLink>
             <div style={{ display: this.state.display1 ? "block" : "none" }}>
-              {data.map((item, index) => (
-                <NavLink to={"/Chat/contact/NewFriends/" + item.id} key={index}>
-                  <NewUser />
+              {this.state.NewFriends.map((item, index) => (
+                <NavLink
+                  to={"/Chat/contact/NewFriends/" + item.CertificationUser._id}
+                  key={index}
+                >
+                  <NewUser
+                    photo={item.CertificationUser.photo}
+                    userName={item.CertificationUser.userName}
+                  />
                 </NavLink>
               ))}
             </div>
@@ -132,9 +168,15 @@ class Contact extends Component {
               联系人
             </NavLink>
             <div style={{ display: this.state.display3 ? "block" : "none" }}>
-              {data.map((item, index) => (
-                <NavLink to={"/Chat/contact/contacts/" + item.id} key={index}>
-                  <Friends image={item.image} UserName={item.UserName} />
+              {this.state.Contacts.map((item, index) => (
+                <NavLink
+                  to={"/Chat/contact/contacts/" + item.CertificationUser._id}
+                  key={index}
+                >
+                  <Friends
+                    image={item.CertificationUser.photo}
+                    UserName={item.CertificationUser.userName}
+                  />
                 </NavLink>
               ))}
             </div>
@@ -158,5 +200,4 @@ class Contact extends Component {
 }
 
 export default Contact;
-
 const data = [];

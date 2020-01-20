@@ -12,9 +12,9 @@ module.exports = (req, res) => {
         .digest("hex");
 
       if (CryptoPassWord === data.passWord) {
+        //登录后添加session
         req.session.userinfo = data;
         res.send({ code: 200, msg: "登录成功" });
-        //登录后添加session
       } else {
         res.send({ code: 0, msg: "密码不正确" });
       }

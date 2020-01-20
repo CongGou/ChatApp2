@@ -3,8 +3,8 @@ import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import Search from "@material-ui/icons/Search";
 import { SearchUser, AddFriend } from "../Axios";
-import socket from "../socket";
 import "../socket";
+// 添加好友组件
 class Add extends Component {
   constructor(arg) {
     super(arg);

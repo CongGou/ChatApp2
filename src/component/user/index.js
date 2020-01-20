@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+
+// 新朋友添加组件
 const NewUser = props => (
   <Container>
-    <Image src={require("../images/WechatIMG2.jpeg")} />
+    <Image src={props.photo} />
     <Cover>
-      <UserName>郭海聪</UserName>
+      <UserName>{props.userName}</UserName>
       <Conter>请求通过认证</Conter>
     </Cover>
     <Certification>等待认证</Certification>

@@ -27,3 +27,15 @@ export const AddFriend = data => {
 export const NewFriends = data => {
   return axios.get("/api/newsfriends", data);
 };
+//用户查看
+export const User = data => {
+  return axios.post("/api/user", data);
+};
+//通过认证
+export const AddPass = data => {
+  return axios.post("/api/addpass", data);
+};
+//联系人
+export const Contacts = data => {
+  return axios.get("/api/contacts", data);
+};

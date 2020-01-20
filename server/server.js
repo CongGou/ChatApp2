@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 8888;
 const server = http.createServer(app);
 const io = socketio(server);
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
-
 //设置session参数
 app.use(
   session({
@@ -28,6 +27,9 @@ app.use(express.json());
 app.post("/register", require("./routers/register"));
 //登录
 app.post("/login", require("./routers/login"));
+
+//socketio
+require("./socket/chat")(io);
 //查找用户
 app.post("/searchuser", require("./routers/searchuser"));
 //聊天首页
@@ -43,8 +45,12 @@ app.get("/logout", (req, res) => {
 app.use("/add", require("./routers/add.js"));
 // 新朋友
 app.get("/newsfriends", require("./routers/newsfriends.js"));
-//socketio
-require("./socket/chat")(io);
+//用户查看
+app.use("/user", require("./routers/user.js"));
+// 通过认证
+app.use("/addpass", require("./routers/addpass.js"));
+
+app.get("/contacts", require("./routers/contacts.js"));
 
 //启动数据库
 mongoose

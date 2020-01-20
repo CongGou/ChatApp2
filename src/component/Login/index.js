@@ -10,7 +10,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import Lock from "@material-ui/icons/Lock";
 import Button from "@material-ui/core/Button";
 import { _Login } from "../Axios";
-
+import socket from "../socket";
 class Login extends React.Component {
   constructor(arg) {
     super(arg);
@@ -45,6 +45,7 @@ class Login extends React.Component {
               });
               setTimeout(() => {
                 this.props.history.push("/Chat");
+                socket.emit("msg", { msg: "2131231" });
               }, 1000);
             }
           }, 2000);
