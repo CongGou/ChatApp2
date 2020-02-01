@@ -13,6 +13,7 @@ class Certification extends Component {
     };
   }
   handleClick = () => {
+    //认证通过后按钮内容修改
     let id = this.state._id;
     AddPass({ id }).then(res => {
       if (res.data.code === 200) {
@@ -23,12 +24,20 @@ class Certification extends Component {
     });
   };
   componentDidMount() {
+    //加载新朋友的认证消息
     let id = this.props.match.params.id;
     User({ id }).then(res => {
       this.setState({
         photo: res.data.data.photo,
         userName: res.data.data.userName,
         _id: res.data.data._id
+      });
+      AddPass({ id }).then(res => {
+        if (res.data.code === 200) {
+          this.setState({
+            msg: res.data.msg
+          });
+        }
       });
     });
   }

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
 // 新朋友添加组件
+// const [certification]
 const NewUser = props => (
   <Container>
     <Image src={props.photo} />

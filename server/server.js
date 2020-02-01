@@ -22,7 +22,6 @@ app.use(
 //中间件
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 //注册
 app.post("/register", require("./routers/register"));
 //登录

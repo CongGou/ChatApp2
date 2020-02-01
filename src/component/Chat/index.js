@@ -7,6 +7,7 @@ import ChatBubble from "@material-ui/icons/ChatBubble";
 import Messages from "../Messages";
 import Contact from "../Contact";
 import { ChatHome, _Close } from "../Axios";
+import { connect } from "react-redux";
 class Chat extends Component {
   state = {
     Image: ""

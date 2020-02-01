@@ -61,7 +61,6 @@ class Contact extends Component {
   componentDidMount() {
     //新朋友请求
     NewFriends().then(res => {
-      // console.log(res.data.data[0].CertificationUser);
       this.setState({
         NewFriends: res.data.data
       });
@@ -114,6 +113,7 @@ class Contact extends Component {
                   <NewUser
                     photo={item.CertificationUser.photo}
                     userName={item.CertificationUser.userName}
+                    isPass={item.isPass}
                   />
                 </NavLink>
               ))}
