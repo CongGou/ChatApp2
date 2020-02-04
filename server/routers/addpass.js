@@ -4,12 +4,18 @@ module.exports = (req, res) => {
   if (req.session.userinfo._id) {
     let passUserId = req.session.userinfo._id;
     let CertificationId = req.body.id;
+    console.log(passUserId);
+    console.log(CertificationId);
     Certification.findOne({
       CertificationUser: CertificationId,
       passUser: passUserId
     }).then(data => {
+      console.log(data);
       if (data) {
-        Certification.update({ isPass: true }).then(data => {
+        Certification.updateOne({
+          isPass: true
+        }).then(data => {
+          console.log(data);
           res.send({ code: 200, msg: "已通过" });
         });
       } else {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 import People from "@material-ui/icons/People";
@@ -7,39 +7,54 @@ import FolderOpen from "@material-ui/icons/FolderOpen";
 import MicNone from "@material-ui/icons/MicNone";
 import Call from "@material-ui/icons/Call";
 import Videocam from "@material-ui/icons/Videocam";
-
+import { Context } from "../../App";
+import { User } from "../Axios";
 const Room = props => {
+  //连接仓库
+  const RoomData = useContext(Context);
+  const userData = RoomData.state.UserCenter;
   //成员显示模块
   const [hidden, setHidden] = useState(false);
-  useEffect(event => {});
+  const Value = useRef(null);
+  const file = useRef(null);
+  const myimg = useRef(null);
+  useEffect(() => {
+    let id = props.match.params.id;
+    User({ id }).then(res => {
+      RoomData.dispatch({
+        type: "GET_USERCENTER",
+        UserCenter: res.data.data
+      });
+    });
+  }, [RoomData]);
   //图片预览
   const handleClickFile = () => {
-    let id = document.getElementById("file");
+    let id = file.current;
     id.click();
   };
   const handlePreviewImg = event => {
     event.persist();
-    let file = document.getElementById("file");
+    let imgfile = file.current;
     let url;
     let imgPre = document.getElementById("myimg");
     // console.log(file.files);
-    if (file.value) {
+    if (imgfile.value) {
       //获取input[file]图片的url
       let agent = navigator.userAgent;
       if (agent.indexOf("MSIE") >= 1) {
-        url = file.value;
+        url = imgfile.value;
         imgPre.src = url;
       } else if (agent.indexOf("Firefox") > 0) {
-        url = window.URL.createObjectURL(file.files.item(0));
+        url = window.URL.createObjectURL(imgfile.files.item(0));
         imgPre.src = url;
       } else if (agent.indexOf("Chrome") > 0) {
-        url = window.URL.createObjectURL(file.files.item(0));
+        url = window.URL.createObjectURL(imgfile.files.item(0));
         imgPre.src = url;
       }
     }
   };
   const handleEnter = e => {
-    let value = document.getElementById("value");
+    let value = Value.current;
     if (e.key === "Enter") {
       e.preventDefault();
       if (value.value === "") {
@@ -55,7 +70,7 @@ const Room = props => {
   return (
     <div className="Room">
       <div className="userName">
-        <span>郭海聪</span>
+        <span>{userData.userName}</span>
         <Grid item onClick={() => setHidden(!hidden)}>
           <People />
         </Grid>
@@ -101,7 +116,7 @@ const Room = props => {
             type="file"
             name="file"
             accept="image/*"
-            id="file"
+            ref={file}
             multiple="multiple"
             onChange={handlePreviewImg}
             style={{ display: "none" }}
@@ -121,7 +136,7 @@ const Room = props => {
         </div>
 
         <div className="Send">
-          <textarea onKeyPress={handleEnter} id="value"></textarea>
+          <textarea onKeyPress={handleEnter} ref={Value}></textarea>
         </div>
       </div>
     </div>

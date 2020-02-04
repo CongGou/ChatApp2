@@ -1,63 +1,58 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { User, AddPass } from "../Axios";
 //认证组件
-class Certification extends Component {
-  constructor(arg) {
-    super(arg);
-    this.state = {
-      photo: "",
-      userName: "",
-      _id: "",
-      msg: "通过认证"
-    };
-  }
-  handleClick = () => {
+const Certification = props => {
+  const [count, setCount] = useState({
+    photo: "",
+    userName: "",
+    _id: ""
+  });
+  const [msg, setMsg] = useState("通过认证");
+  const handleClick = () => {
     //认证通过后按钮内容修改
-    let id = this.state._id;
+    let id = count._id;
     AddPass({ id }).then(res => {
       if (res.data.code === 200) {
-        this.setState({
-          msg: res.data.msg
-        });
+        setCount(res.data.msg);
       }
     });
   };
-  componentDidMount() {
-    //加载新朋友的认证消息
-    let id = this.props.match.params.id;
-    User({ id }).then(res => {
-      this.setState({
-        photo: res.data.data.photo,
-        userName: res.data.data.userName,
-        _id: res.data.data._id
-      });
-      AddPass({ id }).then(res => {
-        if (res.data.code === 200) {
-          this.setState({
-            msg: res.data.msg
-          });
+  useEffect(() => {
+    // console.log(props)
+    let id = props.match.params.id;
+    User({ id }).then(
+      res => {
+        if (res) {
+          setCount(res.data.data);
         }
-      });
-    });
-  }
-  render() {
-    return (
-      <Container>
-        <Cover>
-          <UserName>{this.state.userName}</UserName>
-          <Image src={this.state.photo} />
-        </Cover>
-
-        <Account>
-          账&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
-          {this.state.userName}
-        </Account>
-        <Through onClick={this.handleClick}>{this.state.msg}</Through>
-      </Container>
+        // AddPass({ id }).then(res => {
+        //   if (res.data.code === 200) {
+        //     this.setState({
+        //       msg: res.data.msg
+        //     });
+        //   }
+        // });
+      },
+      [setCount]
     );
-  }
-}
+  });
+  return (
+    <Container>
+      <Cover>
+        <UserName>{count.userName}</UserName>
+        <Image src={count.photo} />
+      </Cover>
+
+      <Account>
+        账&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
+        {count.userName}
+      </Account>
+      <Through onClick={handleClick}>{msg}</Through>
+    </Container>
+  );
+};
+
 export default Certification;
 const Container = styled.div`
   width: 310px;

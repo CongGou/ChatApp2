@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
@@ -8,81 +8,78 @@ import MessageLogo from "../MessageLogo";
 import Room from "../Room";
 import Add from "../Add";
 import AddGroup from "../AddGroup";
-class Messages extends Component {
-  constructor(arg) {
-    super(arg);
-    this.state = {
-      hidden: true
-    };
-  }
-  handleClick = (item, index) => {};
-  handleAdd = e => {
+import { Context } from "../../App";
+import { Contacts } from "../Axios";
+// 消息组件
+const Messages = props => {
+  const [hidden, setHidden] = useState(true);
+  //连接仓库
+  const MessagesData = useContext(Context);
+  const usersData = MessagesData.state.Contacts;
+  const handleAdd = e => {
     e.stopPropagation();
-    this.setState({
-      hidden: !this.state.hidden
-    });
+    setHidden(!hidden);
   };
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.location.pathname === "/Chat/message/add" ||
-      nextProps.location.pathname === "/Chat/message/addGroup"
-    ) {
-      this.setState({
-        hidden: true
+  useEffect(() => {
+    //联系人
+    Contacts().then(res => {
+      MessagesData.dispatch({
+        type: "GET_CONTACTSDATA",
+        Contacts: res.data.data
       });
+    });
+    if (
+      props.location.pathname === "/Chat/message/add" ||
+      props.location.pathname === "/Chat/message/addGroup"
+    ) {
+      setHidden(true);
     }
-  }
-  render() {
-    return (
-      <div className="MessageCover">
-        <div className="MessageContainer">
-          <div className="Search">
-            <input className="SearchInput" placeholder="搜索" />
-            <Grid item className="SearchIcon">
-              <Search />
-            </Grid>
-            <button className="Add" onClick={this.handleAdd}>
-              +
-            </button>
-          </div>
-          <div className={this.state.hidden ? "AddBox addHidden" : "AddBox "}>
-            <NavLink to={"/Chat/message/add"}>添加朋友</NavLink>
-            <NavLink to={"/Chat/message/addGroup"}>创建群聊</NavLink>
-          </div>
-          <div className="MessageList">
-            {Data.map((item, index) => (
-              <NavLink
-                to={"/Chat/message/" + item.id}
-                key={index}
-                replace
-                onClick={() => this.handleClick(item, index)}
-                className={"ListItem"}
-                activeClassName={"Active"}
-              >
-                <MessageList
-                  image={item.image}
-                  title={item.title}
-                  user={item.user}
-                  content={item.content}
-                />
-              </NavLink>
-            ))}
-          </div>
+  }, [MessagesData, props.location.pathname]);
+  return (
+    <div className="MessageCover">
+      <div className="MessageContainer">
+        <div className="Search">
+          <input className="SearchInput" placeholder="搜索" />
+          <Grid item className="SearchIcon">
+            <Search />
+          </Grid>
+          <button className="Add" onClick={handleAdd}>
+            +
+          </button>
         </div>
-        <div className="MessageRoom">
-          {/* <MessageLogo /> */}
-          <Switch>
-            <Route exact path="/Chat/message" component={MessageLogo} />
-            <Route path="/Chat/message/add" component={Add} />
-            <Route path="/Chat/message/addGroup" component={AddGroup} />
-            <Route path="/Chat/message/:id" component={Room} />
-          </Switch>
+        <div className={hidden ? "AddBox addHidden" : "AddBox "}>
+          <NavLink to={"/Chat/message/add"}>添加朋友</NavLink>
+          <NavLink to={"/Chat/message/addGroup"}>创建群聊</NavLink>
+        </div>
+        <div className="MessageList">
+          {usersData.map((item, index) => (
+            <NavLink
+              to={"/Chat/message/" + item.CertificationUser._id}
+              key={index}
+              replace
+              className={"ListItem"}
+              activeClassName={"Active"}
+            >
+              <MessageList
+                image={item.CertificationUser.photo}
+                // user={item.user}
+                title={item.CertificationUser.userName}
+                // content={item.content}
+              />
+            </NavLink>
+          ))}
         </div>
       </div>
-    );
-  }
-}
-
+      <div className="MessageRoom">
+        {/* <MessageLogo /> */}
+        <Switch>
+          <Route exact path="/Chat/message" component={MessageLogo} />
+          <Route path="/Chat/message/add" component={Add} />
+          <Route path="/Chat/message/addGroup" component={AddGroup} />
+          <Route path="/Chat/message/:id" component={Room} />
+        </Switch>
+      </div>
+    </div>
+  );
+};
 export default Messages;
-
-const Data = [];

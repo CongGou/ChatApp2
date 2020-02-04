@@ -1,16 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-const MessageList = props => (
-  <Container>
-    <Image src={props.image} />
-    <Cover>
-      <Title>{props.title}</Title>
-      <Content>
-        {props.user}：{props.content}
-      </Content>
-    </Cover>
-  </Container>
-);
+const MessageList = props => {
+  return (
+    <Container>
+      <Image src={props.image} />
+      <Cover>
+        <Title>{props.title}</Title>
+        <Content>
+          {props.user}：{props.content}
+        </Content>
+      </Cover>
+    </Container>
+  );
+};
+// const MessageList = props => (
+
+// );
 export default MessageList;
 
 const Container = styled.div`
@@ -25,6 +30,7 @@ const Image = styled.img`
   width: 45px;
   height: 45px;
   border-radius: 2px;
+  background: #fff;
 `;
 const Cover = styled.div`
   margin-left: 5px;

@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-const Friends = props => (
-  <Container>
-    <Image src={props.image} />
-    <Cover>
-      <UserName>{props.UserName}</UserName>
-    </Cover>
-  </Container>
-);
+function Friends(props) {
+  return (
+    <Container>
+      <Image src={props.image} />
+      <Cover>
+        <UserName>{props.UserName}</UserName>
+      </Cover>
+    </Container>
+  );
+}
 export default Friends;
 
 const Container = styled.div`

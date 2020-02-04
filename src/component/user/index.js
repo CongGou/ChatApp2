@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 // 新朋友添加组件
 // const [certification]
@@ -9,7 +9,7 @@ const NewUser = props => (
       <UserName>{props.userName}</UserName>
       <Conter>请求通过认证</Conter>
     </Cover>
-    <Certification>等待认证</Certification>
+    <Certification>{props.isPass ? "已通过" : "等待认证"}</Certification>
   </Container>
 );
 export default NewUser;
