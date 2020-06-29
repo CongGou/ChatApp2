@@ -55,8 +55,8 @@ const Add = props => {
   };
   // 添加好友
   const handleAdd = () => {
-    const passUser = userData.data._id;
-    AddFriend({ passUser })
+    const to = userData.data._id;
+    AddFriend({ to })
       .then(res => {
         if (res.data.code === 200) {
           alert(res.data.msg);

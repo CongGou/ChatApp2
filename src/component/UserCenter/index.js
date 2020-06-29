@@ -9,14 +9,19 @@ const UserCenter = props => {
   const storeData = useContext(Context);
   const UserCenterData = storeData.state.UserCenter;
   useEffect(() => {
-    let id = props.match.params.id;
-    User({ id }).then(res => {
-      storeData.dispatch({
-        type: "GET_USERCENTER",
-        UserCenter: res.data.data
+    const id = setInterval(() => {
+      let id = props.match.params.id;
+      User({ id }).then(res => {
+        storeData.dispatch({
+          type: "GET_USERCENTER",
+          UserCenter: res.data.data
+        });
       });
-    });
-  }, [UserCenterData]);
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  }, [storeData, props.match.params.id]);
   return (
     <div className="UserCenter">
       <div className="UserCenterTit">

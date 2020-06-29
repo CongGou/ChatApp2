@@ -1,54 +1,59 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { User, AddPass } from "../Axios";
+import { Context } from "../../App";
 //认证组件
-const Certification = props => {
-  const [count, setCount] = useState({
-    photo: "",
-    userName: "",
-    _id: ""
-  });
-  const [msg, setMsg] = useState("通过认证");
+const Certification = (props) => {
+  const CertificationData = useContext(Context);
+  const userData = CertificationData.state.Certification;
+  //认证通过后按钮内容修改
   const handleClick = () => {
-    //认证通过后按钮内容修改
-    let id = count._id;
-    AddPass({ id }).then(res => {
+    let id = userData.data._id;
+    AddPass({ id }).then((res) => {
       if (res.data.code === 200) {
-        setCount(res.data.msg);
+        CertificationData.dispatch({
+          type: "GET_CERTIFICATION",
+          Certification: {
+            data: userData.data,
+            msg: res.data.msg,
+          },
+        });
       }
     });
   };
   useEffect(() => {
     // console.log(props)
-    let id = props.match.params.id;
-    User({ id }).then(
-      res => {
+    const id = setInterval(() => {
+      let id = props.match.params.id;
+      //还没写完认证出现问题重新修改明天
+      User({ id }).then((res) => {
         if (res) {
-          setCount(res.data.data);
+          CertificationData.dispatch({
+            type: "GET_CERTIFICATION",
+            Certification: {
+              data: res.data.data,
+              msg: "已通过",
+            },
+          });
         }
-        // AddPass({ id }).then(res => {
-        //   if (res.data.code === 200) {
-        //     this.setState({
-        //       msg: res.data.msg
-        //     });
-        //   }
-        // });
-      },
-      [setCount]
-    );
-  });
+      });
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  }, [props.match.params.id, CertificationData]);
   return (
     <Container>
       <Cover>
-        <UserName>{count.userName}</UserName>
-        <Image src={count.photo} />
+        <UserName>{userData.data.userName}</UserName>
+        <Image src={userData.data.photo} />
       </Cover>
 
       <Account>
         账&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
-        {count.userName}
+        {userData.data.userName}
       </Account>
-      <Through onClick={handleClick}>{msg}</Through>
+      <Through onClick={handleClick}>{userData.msg || "通过认证"}</Through>
     </Container>
   );
 };

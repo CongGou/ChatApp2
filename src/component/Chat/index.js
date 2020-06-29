@@ -8,34 +8,36 @@ import Messages from "../Messages";
 import Contact from "../Contact";
 import { Context } from "../../App";
 import { ChatHome, _Close } from "../Axios";
-const Chat = props => {
+const Chat = (props) => {
   const userData = useContext(Context);
   let image = userData.state.user.photo;
   // console.log(userData);
   const handleClose = () => {
-    _Close().then(res => {
+    _Close().then((res) => {
       if (res.data.code === 200) {
         props.history.push("/");
       }
     });
   };
   useEffect(() => {
-    //加载后获取个人资料
-    ChatHome()
-      .then(res => {
-        if (res.data) {
-          if (res.data.code === 404) {
-            props.history.push("/");
-          }
-          userData.dispatch({
-            type: "GET_USERPHOTO",
-            user: {
-              photo: res.data.data.photo
-            }
-          });
+    const id = setInterval(async () => {
+      //加载后获取个人资料
+      let HomeResult = await ChatHome();
+      if (HomeResult.data) {
+        if (HomeResult.data.code === 404) {
+          props.history.push("/");
         }
-      })
-      .catch(e => {});
+        userData.dispatch({
+          type: "GET_USERPHOTO",
+          user: {
+            photo: HomeResult.data.data.photo,
+          },
+        });
+      }
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
   }, [userData, props.history]);
   return (
     <div className="Chat">

@@ -10,31 +10,44 @@ import Add from "../Add";
 import AddGroup from "../AddGroup";
 import { Context } from "../../App";
 import { Contacts } from "../Axios";
+import { Deduplication } from "../utils";
 // 消息组件
-const Messages = props => {
+const Messages = (props) => {
   const [hidden, setHidden] = useState(true);
   //连接仓库
   const MessagesData = useContext(Context);
   const usersData = MessagesData.state.Contacts;
-  const handleAdd = e => {
+
+  const handleAdd = (e) => {
     e.stopPropagation();
     setHidden(!hidden);
   };
   useEffect(() => {
-    //联系人
-    Contacts().then(res => {
+    const id = setInterval(async () => {
+      //联系人
+      let result = await Contacts();
+      let resultArr = result.data.data;
+      let arr = [];
+      resultArr.forEach((item) => {
+        // console.log(item.from);
+        arr.push(item.from, item.to);
+      });
+      //去重
+      let ContactsData = Deduplication(arr);
+      // console.log(arr);
       MessagesData.dispatch({
         type: "GET_CONTACTSDATA",
-        Contacts: res.data.data
+        Contacts: ContactsData,
       });
-    });
-    if (
-      props.location.pathname === "/Chat/message/add" ||
-      props.location.pathname === "/Chat/message/addGroup"
-    ) {
-      setHidden(true);
-    }
-  }, [MessagesData, props.location.pathname]);
+      if (
+        props.location.pathname === "/Chat/message/add" ||
+        props.location.pathname === "/Chat/message/addGroup"
+      ) {
+        setHidden(true);
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [props.location.pathname, MessagesData]);
   return (
     <div className="MessageCover">
       <div className="MessageContainer">
@@ -54,16 +67,16 @@ const Messages = props => {
         <div className="MessageList">
           {usersData.map((item, index) => (
             <NavLink
-              to={"/Chat/message/" + item.CertificationUser._id}
+              to={"/Chat/message/" + item._id}
               key={index}
               replace
               className={"ListItem"}
               activeClassName={"Active"}
             >
               <MessageList
-                image={item.CertificationUser.photo}
+                image={item.photo}
                 // user={item.user}
-                title={item.CertificationUser.userName}
+                title={item.userName}
                 // content={item.content}
               />
             </NavLink>

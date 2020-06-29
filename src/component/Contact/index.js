@@ -14,7 +14,8 @@ import Certification from "../Certification";
 import GroupChat from "../GroupChat";
 import { NewFriends, Contacts } from "../Axios";
 import { Context } from "../../App";
-const Contact = props => {
+import { Deduplication } from "../utils";
+const Contact = (props) => {
   //使用useState钩子函数定义变量
   const [display1, setDisplay1] = useState(false);
   const [display2, setDisplay2] = useState(false);
@@ -22,31 +23,46 @@ const Contact = props => {
   const storeData = useContext(Context);
   // console.log(storeData);
   let newFriendsArr = storeData.state.newFriends;
+
   let ContactsArr = storeData.state.Contacts;
-  const handleClick1 = props => {
+  // console.log(ContactsArr);
+  const handleClick1 = (props) => {
     setDisplay1(!display1);
   };
-  const handleClick2 = props => {
+  const handleClick2 = (props) => {
     setDisplay2(!display2);
   };
-  const handleClick3 = props => {
+  const handleClick3 = (props) => {
     setDisplay3(!display3);
   };
   useEffect(() => {
     //新朋友请求
-    NewFriends().then(res => {
+    const id = setInterval(async () => {
+      let NewFriendsResult = await NewFriends();
+      let NewFriendsResultArr = NewFriendsResult.data.data;
       storeData.dispatch({
         type: "GET_NEWFRIENDSDATA",
-        newFriends: res.data.data
+        newFriends: NewFriendsResultArr,
       });
-    });
-    //联系人
-    Contacts().then(res => {
+      //联系人
+      let result = await Contacts();
+      let resultArr = result.data.data;
+      let arr = [];
+      resultArr.forEach((item) => {
+        // console.log(item.from);
+        arr.push(item.from, item.to);
+      });
+      //去重
+      let ContactsData = Deduplication(arr);
+      // console.log(arr);
       storeData.dispatch({
         type: "GET_CONTACTSDATA",
-        Contacts: res.data.data
+        Contacts: ContactsData,
       });
-    });
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
   }, [storeData]);
   return (
     <div className="MessageCover">
@@ -76,12 +92,12 @@ const Contact = props => {
           <div style={{ display: display1 ? "block" : "none" }}>
             {newFriendsArr.map((item, index) => (
               <NavLink
-                to={"/Chat/contact/NewFriends/" + item.CertificationUser._id}
+                to={"/Chat/contact/NewFriends/" + item.from._id}
                 key={index}
               >
                 <NewUser
-                  photo={item.CertificationUser.photo}
-                  userName={item.CertificationUser.userName}
+                  photo={item.from.photo}
+                  userName={item.from.userName}
                   isPass={item.isPass}
                 />
               </NavLink>
@@ -126,14 +142,8 @@ const Contact = props => {
           </NavLink>
           <div style={{ display: display3 ? "block" : "none" }}>
             {ContactsArr.map((item, index) => (
-              <NavLink
-                to={"/Chat/contact/contacts/" + item.CertificationUser._id}
-                key={index}
-              >
-                <Friends
-                  image={item.CertificationUser.photo}
-                  UserName={item.CertificationUser.userName}
-                />
+              <NavLink to={"/Chat/contact/contacts/" + item._id} key={index}>
+                <Friends image={item.photo} UserName={item.userName} />
               </NavLink>
             ))}
           </div>

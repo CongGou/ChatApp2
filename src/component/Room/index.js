@@ -7,9 +7,12 @@ import FolderOpen from "@material-ui/icons/FolderOpen";
 import MicNone from "@material-ui/icons/MicNone";
 import Call from "@material-ui/icons/Call";
 import Videocam from "@material-ui/icons/Videocam";
+
 import { Context } from "../../App";
 import { User } from "../Axios";
-const Room = props => {
+
+import socket from "../socket";
+const Room = (props) => {
   //连接仓库
   const RoomData = useContext(Context);
   const userData = RoomData.state.UserCenter;
@@ -17,56 +20,62 @@ const Room = props => {
   const [hidden, setHidden] = useState(false);
   const Value = useRef(null);
   const file = useRef(null);
-  const myimg = useRef(null);
   useEffect(() => {
-    let id = props.match.params.id;
-    User({ id }).then(res => {
-      RoomData.dispatch({
-        type: "GET_USERCENTER",
-        UserCenter: res.data.data
+    const id = setInterval(() => {
+      let id = props.match.params.id;
+      User({ id }).then((res) => {
+        RoomData.dispatch({
+          type: "GET_USERCENTER",
+          UserCenter: res.data.data,
+        });
       });
-    });
-  }, [RoomData]);
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  }, [RoomData, props.match.params.id]);
   //图片预览
-  const handleClickFile = () => {
-    let id = file.current;
-    id.click();
-  };
-  const handlePreviewImg = event => {
+  const handleClickFile = () => {};
+  const handlePreviewImg = (event) => {
     event.persist();
-    let imgfile = file.current;
-    let url;
-    let imgPre = document.getElementById("myimg");
-    // console.log(file.files);
-    if (imgfile.value) {
-      //获取input[file]图片的url
-      let agent = navigator.userAgent;
-      if (agent.indexOf("MSIE") >= 1) {
-        url = imgfile.value;
-        imgPre.src = url;
-      } else if (agent.indexOf("Firefox") > 0) {
-        url = window.URL.createObjectURL(imgfile.files.item(0));
-        imgPre.src = url;
-      } else if (agent.indexOf("Chrome") > 0) {
-        url = window.URL.createObjectURL(imgfile.files.item(0));
-        imgPre.src = url;
-      }
-    }
   };
-  const handleEnter = e => {
+  const handleEnter = (e) => {
     let value = Value.current;
     if (e.key === "Enter") {
       e.preventDefault();
       if (value.value === "") {
         alert("不能发送空白消息");
       } else {
-        alert("发送消息成功");
+        socket.emit("msg", value.value);
+        socket.on("chat_message", (res) => {
+          console.log(res);
+        });
         value.value = "";
       }
       // console.log(value.value);
     }
   };
-
+  const List = () => {
+    return (
+      <div className="RoomCon">
+        <div className="received">
+          <img src={require("../images/WechatIMG2.jpeg")} alt="" />
+          <div className="Cover">
+            <span>郭海聪</span>
+            <p>明天考试加油，今天好好吃饭和好好睡觉不要紧张相信自己</p>
+          </div>
+        </div>
+        <div className="received emit">
+          <div className="Cover">
+            <p>
+              明天考试加油今天好好吃饭和好好睡觉不要紧张，相信自己今天好好吃饭和好好睡觉不要紧张，相信自己
+            </p>
+          </div>
+          <img src={userData.photo} alt="" />
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="Room">
       <div className="userName">
@@ -85,28 +94,12 @@ const Room = props => {
             <span>牛奶只喝酸的dsd</span>
           </div>
           <div className="addCover">
-            <img src={require("../images/WechatIMG2.jpeg")} alt="" />
-            <span>牛奶只喝酸的dsd</span>
+            <img src={userData.photo} alt="" />
+            <span>{userData.userName}</span>
           </div>
         </div>
       </div>
-      <div className="RoomCon">
-        <div className="received">
-          <img src={require("../images/WechatIMG2.jpeg")} alt="" />
-          <div className="Cover">
-            <span>郭海聪</span>
-            <p>明天考试加油，今天好好吃饭和好好睡觉不要紧张相信自己</p>
-          </div>
-        </div>
-        <div className="received emit">
-          <div className="Cover">
-            <p>
-              明天考试加油今天好好吃饭和好好睡觉不要紧张，相信自己今天好好吃饭和好好睡觉不要紧张，相信自己
-            </p>
-          </div>
-          <img src={require("../images/WechatIMG2.jpeg")} alt="" />
-        </div>
-      </div>
+      {List()}
       <div className="RoomFoot">
         <div className="Menu">
           <Grid item onClick={handleClickFile} className="MenuIcon">
